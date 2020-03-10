@@ -1,0 +1,33 @@
+plugins {
+	id 'org.springframework.boot' version '2.2.5.RELEASE'
+	id 'io.spring.dependency-management' version '1.0.9.RELEASE'
+	id 'java'
+	id "se.thinkcode.cucumber-runner" version "0.0.8"
+}
+
+group = 'com.cucumber'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '1.8'
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter'
+	testImplementation('org.springframework.boot:spring-boot-starter-test') {
+		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+	}
+	testImplementation 'io.cucumber:cucumber-junit:5.4.0'
+	testImplementation 'io.cucumber:cucumber-java:5.4.0'
+}
+
+test {
+	useJUnitPlatform()
+}
+
+cucumber {
+	glue = 'classpath:com.cucumber.banco'
+	featurePath = 'src/test/resources/banco'
+	main = 'io.cucumber.core.cli.Main'
+}
