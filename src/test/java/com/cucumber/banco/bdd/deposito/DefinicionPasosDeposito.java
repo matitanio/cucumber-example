@@ -1,8 +1,13 @@
 package com.cucumber.banco.bdd.deposito;
 
-import com.cucumber.banco.Cuenta;
-import com.cucumber.banco.Movimiento;
-import com.cucumber.banco.TipoMovimiento;
+import com.cucumber.banco.domain.Cuenta;
+import com.cucumber.banco.domain.Movimiento;
+import com.cucumber.banco.domain.TipoMovimiento;
+import com.cucumber.banco.port.ActualizarCuentaPort;
+import com.cucumber.banco.port.BuscarCuentaPort;
+import com.cucumber.banco.port.db.RepositorioCuentaEnMemoria;
+import com.cucumber.banco.servicios.InterfazDeposito;
+import com.cucumber.banco.servicios.ServicioDeposito;
 import helpers.CuentaHolder;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.When;
@@ -15,12 +20,14 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class DefinicionPasosDeposito {
 
     private Cuenta unaCuentaPropia = CuentaHolder.getInstace().getCuenta();
-
+    private BuscarCuentaPort buscarCuentaPort = RepositorioCuentaEnMemoria.getInstance();
+    private ActualizarCuentaPort actualizarCuentaPort = RepositorioCuentaEnMemoria.getInstance();
+    private InterfazDeposito interfazDeposito = new ServicioDeposito(actualizarCuentaPort, buscarCuentaPort);
 
     @When("Deposito {} en la cuenta")
     public void deposito(BigDecimal monto) {
 
-        unaCuentaPropia.depositar(monto);
+        interfazDeposito.depositar(unaCuentaPropia.getNumeroCuenta(), monto);
     }
 
 

@@ -1,7 +1,10 @@
 package com.cucumber.banco.bdd;
 
-import com.cucumber.banco.Acuerdo;
-import com.cucumber.banco.Cuenta;
+import com.cucumber.banco.domain.Acuerdo;
+import com.cucumber.banco.domain.Cuenta;
+import com.cucumber.banco.port.ActualizarCuentaPort;
+import com.cucumber.banco.port.BuscarCuentaPort;
+import com.cucumber.banco.port.db.RepositorioCuentaEnMemoria;
 import helpers.CuentaHolder;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
@@ -13,11 +16,16 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class PasosCuenta {
 
+    private BuscarCuentaPort buscarCuentaPort = RepositorioCuentaEnMemoria.getInstance();
+    private ActualizarCuentaPort actualizarCuentaPort = RepositorioCuentaEnMemoria.getInstance();
 
-    @Given("una cuenta tiene un saldo de {}")
-    public void una_cuenta_propia(BigDecimal saldoInicial) {
 
-        CuentaHolder.getInstace().setCuenta( new Cuenta(saldoInicial));
+    @Given("la cuenta {string} tiene un saldo de {}")
+    public void una_cuenta_propia(String idCuenta, BigDecimal saldoInicial) {
+
+        Cuenta cuenta = new Cuenta(idCuenta,saldoInicial);
+        actualizarCuentaPort.actualizarCuenta(cuenta);
+        CuentaHolder.getInstace().setCuenta(cuenta);
     }
 
     @And("no tiene acuerdo")
@@ -44,6 +52,6 @@ public class PasosCuenta {
     }
 
     private Cuenta unaCuentaPropia(){
-        return CuentaHolder.getInstace().getCuenta();
+        return buscarCuentaPort.buscarCuentaPorId("0000000001");
     }
 }

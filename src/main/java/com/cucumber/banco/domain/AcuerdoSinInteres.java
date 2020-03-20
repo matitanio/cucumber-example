@@ -1,4 +1,4 @@
-package com.cucumber.banco;
+package com.cucumber.banco.domain;
 
 import java.math.BigDecimal;
 

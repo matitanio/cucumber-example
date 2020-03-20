@@ -1,24 +1,24 @@
-package com.cucumber.banco;
+package com.cucumber.banco.domain;
 
 import com.cucumber.banco.exceptions.SaldoInsuficiente;
-
-import javax.swing.text.html.Option;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
+import java.util.UUID;
 
 public class Cuenta {
 
     private BigDecimal saldo;
     private List<Movimiento> movimientos;
     private List<Acuerdo> acuerdos;
+    private String numeroCuenta;
 
-    public Cuenta(BigDecimal saldo) {
+    public Cuenta(String id, BigDecimal saldo) {
         this.saldo = saldo;
         this.movimientos = new ArrayList<>();
         this.acuerdos = new ArrayList<>();
+        numeroCuenta = id;
     }
 
     public BigDecimal consultarSaldo() {
@@ -26,6 +26,16 @@ public class Cuenta {
     }
 
     public void depositar(BigDecimal monto){
+
+       ingresarDinerdo(monto, TipoMovimiento.DEPOSITO);
+    }
+
+    public void recibirTransferencia(BigDecimal monto){
+
+        ingresarDinerdo(monto, TipoMovimiento.TRANSFERENCIA);
+    }
+
+    private void ingresarDinerdo(BigDecimal monto, TipoMovimiento tipoMovimiento){
 
         if(tengoSaldoNegativoYAcuerdoConIntres()){
             Acuerdo acuerdo = buscarAcuerdoQueAplica();
@@ -36,7 +46,7 @@ public class Cuenta {
             this.movimientos.add(new Movimiento(TipoMovimiento.INTERES_COBRADO, montoInteres));
         }
         this.saldo = this.saldo.add(monto);
-        this.movimientos.add(new Movimiento(TipoMovimiento.DEPOSITO, monto));
+        this.movimientos.add(new Movimiento(tipoMovimiento, monto));
     }
 
     private boolean tengoSaldoNegativoYAcuerdoConIntres() {
@@ -75,7 +85,7 @@ public class Cuenta {
         this.acuerdos.add(acuerdo);
     }
 
-    public void extraer(BigDecimal montoExtraccion) {
+    public void extraer(BigDecimal montoExtraccion, TipoMovimiento origenExtraccion) {
 
         if(montoExtraccion.signum() < 0){
             throw  new RuntimeException("no se puede extrar negativo");
@@ -88,7 +98,7 @@ public class Cuenta {
         }
 
         this.saldo = this.saldo.subtract(montoExtraccion);
-        this.movimientos.add(new Movimiento(TipoMovimiento.EXTRACCION, montoExtraccion));
+        this.movimientos.add(new Movimiento(origenExtraccion, montoExtraccion.negate()));
     }
 
     private boolean tieneAcuerdo() {
@@ -120,4 +130,7 @@ public class Cuenta {
         return this.acuerdos==null || this.acuerdos.size() == 0;
     }
 
+    public String getNumeroCuenta() {
+        return numeroCuenta;
+    }
 }

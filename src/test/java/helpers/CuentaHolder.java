@@ -1,8 +1,6 @@
 package helpers;
 
-import com.cucumber.banco.Cuenta;
-
-import java.awt.event.WindowStateListener;
+import com.cucumber.banco.domain.Cuenta;
 
 public class CuentaHolder {
 
