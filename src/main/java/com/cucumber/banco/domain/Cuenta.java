@@ -39,14 +39,18 @@ public class Cuenta {
 
         if(tengoSaldoNegativoYAcuerdoConIntres()){
             Acuerdo acuerdo = buscarAcuerdoQueAplica();
-            BigDecimal montoInteres = this.saldo.multiply(acuerdo.getInteres())
-                    .divide(new BigDecimal(100)).negate().setScale(2);
+            BigDecimal montoInteres = calcularMontoInteres(acuerdo);
 
             this.saldo = this.saldo.subtract(montoInteres);
             this.movimientos.add(new Movimiento(TipoMovimiento.INTERES_COBRADO, montoInteres));
         }
         this.saldo = this.saldo.add(monto);
         this.movimientos.add(new Movimiento(tipoMovimiento, monto));
+    }
+
+    private BigDecimal calcularMontoInteres(Acuerdo acuerdo) {
+        return this.saldo.multiply(acuerdo.getInteres())
+                        .divide(new BigDecimal(100)).negate().setScale(2);
     }
 
     private boolean tengoSaldoNegativoYAcuerdoConIntres() {
