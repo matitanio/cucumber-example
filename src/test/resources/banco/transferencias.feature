@@ -27,3 +27,12 @@ Feature: Transferir entre cuentas propias por numero de cuenta
     Then obtengo el mensaje "Saldo Insuficiente"
     And El saldo de la cuenta "0000000001" es 2000.00
     And El saldo de la cuenta "0000000002" es 3000.00
+
+
+  Scenario: Transferir desde una cuenta que no tiene saldo suficiento
+    Given la cuenta "0000000001" con saldo de 2000.00
+    And la cuenta "0000000002" con saldo de 3000.00
+    When intento transfereir 2600.00 de la cuenta "0000000001" a la cuenta "0000000002"
+    Then obtengo el mensaje "Saldo Insuficiente"
+    And El saldo de la cuenta "0000000001" es 2000.00
+    And El saldo de la cuenta "0000000002" es 3000.00
