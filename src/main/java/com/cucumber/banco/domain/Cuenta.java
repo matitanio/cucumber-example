@@ -91,6 +91,7 @@ public class Cuenta {
 
     public void extraer(BigDecimal montoExtraccion, TipoMovimiento origenExtraccion) {
 
+
         if(montoExtraccion.signum() < 0){
             throw  new RuntimeException("no se puede extrar negativo");
         }
@@ -98,7 +99,7 @@ public class Cuenta {
         notTieneAcuerdoYElSaldoEsInsuficiente(montoExtraccion);
 
         if(tieneAcuerdo() && noTieneSaldo(montoExtraccion)){
-            throw new SaldoInsuficiente();
+            throw new SaldoInsuficiente("Saldo Insuficiente");
         }
 
         this.saldo = this.saldo.subtract(montoExtraccion);

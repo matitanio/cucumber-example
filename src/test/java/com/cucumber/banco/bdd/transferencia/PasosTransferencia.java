@@ -4,6 +4,7 @@ import com.cucumber.banco.comandos.ComandoTransfencia;
 import com.cucumber.banco.domain.Cuenta;
 import com.cucumber.banco.domain.Movimiento;
 import com.cucumber.banco.domain.TipoMovimiento;
+import com.cucumber.banco.exceptions.SaldoInsuficiente;
 import com.cucumber.banco.port.ActualizarCuentaPort;
 import com.cucumber.banco.port.BuscarCuentaPort;
 import com.cucumber.banco.port.db.RepositorioCuentaEnMemoria;
@@ -15,8 +16,10 @@ import io.cucumber.java.en.When;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
 
 public class PasosTransferencia {
 
@@ -56,5 +59,29 @@ public class PasosTransferencia {
         assertEquals(montoMovimiento, movimiento.getMonto());
         assertEquals(TipoMovimiento.TRANSFERENCIA, movimiento.getTipo());
     }
+
+    private String mensajeErrorPorFaltaDeSaldo;
+    @When("intento transfereir {} de la cuenta {string} a la cuenta {string}")
+    public void intento_transfereir_de_la_cuenta_a_la_cuenta(BigDecimal monto, String cuentaOrigen, String cuentaDestino) {
+
+        ComandoTransfencia transfencia = new ComandoTransfencia(cuentaOrigen, cuentaDestino, monto);
+
+        try {
+            transferencia.transferir(transfencia);
+            fail("No se debe dejar transferir");
+        }catch (SaldoInsuficiente si){
+            mensajeErrorPorFaltaDeSaldo = si.getMessage();
+        }catch (Exception e){
+            fail("Fallo por otro motivo que no fue la falta de saldo");
+        }
+    }
+
+
+    @Then("obtengo el mensaje {string}")
+    public void obtengo_el_mensaje(String mensajeEsperado) {
+
+        assertEquals(mensajeEsperado, mensajeErrorPorFaltaDeSaldo);
+    }
+
 
 }
