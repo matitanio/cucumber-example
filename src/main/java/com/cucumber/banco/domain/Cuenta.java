@@ -5,7 +5,6 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 public class Cuenta {
 
@@ -137,5 +136,15 @@ public class Cuenta {
 
     public String getNumeroCuenta() {
         return numeroCuenta;
+    }
+
+    public BigDecimal consultarDescubiertoDispobible() {
+
+        BigDecimal totalAcuerdos = acuerdos.stream()
+                .map(Acuerdo::getMontoAcuerdo)
+                .reduce(BigDecimal.ZERO, (subtotal, element) -> subtotal.add(element));
+
+
+        return totalAcuerdos;
     }
 }
