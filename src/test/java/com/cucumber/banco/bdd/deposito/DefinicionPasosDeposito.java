@@ -2,22 +2,12 @@ package com.cucumber.banco.bdd.deposito;
 
 import com.cucumber.banco.bdd.runners.DepositosRunner;
 import com.cucumber.banco.bdd.runners.backendRunnner.DepositosBackendRunner;
-import com.cucumber.banco.domain.Cuenta;
-import com.cucumber.banco.domain.Movimiento;
-import com.cucumber.banco.domain.TipoMovimiento;
-import com.cucumber.banco.port.ActualizarCuentaPort;
-import com.cucumber.banco.port.BuscarCuentaPort;
-import com.cucumber.banco.port.db.RepositorioCuentaEnMemoria;
-import com.cucumber.banco.servicios.InterfazDeposito;
-import com.cucumber.banco.servicios.ServicioDeposito;
-import helpers.CuentaHolder;
+
+
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.When;
 
 import java.math.BigDecimal;
-import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class DefinicionPasosDeposito {
 
