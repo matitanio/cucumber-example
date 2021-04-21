@@ -16,6 +16,7 @@ repositories {
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation group: 'de.monochromata.cucumber', name: 'reporting-plugin', version: '4.0.101'
 	testImplementation('org.springframework.boot:spring-boot-starter-test') {
 		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
 	}
@@ -31,7 +32,9 @@ cucumber {
 	if(System.properties['org.gradle.project.runner'] == null || System.properties['org.gradle.project.runner'] == ""){
 		System.properties['org.gradle.project.runner']= 'BACK_END'
 	}
+	println "----------------------- " + System.properties['version']
 	glue = 'classpath:com.cucumber.banco'
+	plugin = ['pretty',	"de.monochromata.cucumber.report.PrettyReports:./build/pretty-cucumber"]
 	featurePath = 'src/test/resources/banco'
 	main = 'io.cucumber.core.cli.Main'
 }
