@@ -8,12 +8,12 @@ pipeline {
                         sh './gradlew -Dcucumber.reporting.config.file=src/test/resources/cucumber-reporting.properties cucumber'
                     }
                     finally{
-                         archive (includes: 'build/pretty-cucumber')
+                         archiveArtifacts (artifacts: 'build/pretty-cucumber/*.*')
                          publishHTML (target: [
                                allowMissing: false,
                                alwaysLinkToLastBuild: false,
                                keepAll: true,
-                               reportDir: 'cucumber-html-reports',
+                               reportDir: 'build/pretty-cucumber/cucumber-html-reports',
                                reportFiles: 'overview-features.html',
                                reportName: "Cucumber reports"
                              ])
