@@ -32,7 +32,6 @@ cucumber {
 	if(System.properties['org.gradle.project.runner'] == null || System.properties['org.gradle.project.runner'] == ""){
 		System.properties['org.gradle.project.runner']= 'BACK_END'
 	}
-	println "----------------------- " + System.properties['version']
 	glue = 'classpath:com.cucumber.banco'
 	plugin = ['pretty',	"de.monochromata.cucumber.report.PrettyReports:./build/pretty-cucumber"]
 	featurePath = 'src/test/resources/banco'
