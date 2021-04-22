@@ -5,6 +5,7 @@ pipeline {
             steps {
                 script{
                     try{
+                        sh "printf '\nversion=${BUILD_NUMBER}' >> src/test/resources/cucumber-reporting.properties"
                         sh './gradlew -Dcucumber.reporting.config.file=src/test/resources/cucumber-reporting.properties cucumber'
                     }
                     finally{
