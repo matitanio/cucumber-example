@@ -5,7 +5,7 @@ pipeline {
             steps {
                 script{
                     try{
-                        var newLine = "\n"
+                        newLine = "\n"
                         sh "printf $newLine >> src/test/resources/cucumber-reporting.properties"
                         sh "printf version=${BUILD_NUMBER} >> src/test/resources/cucumber-reporting.properties"
                         sh './gradlew -Dcucumber.reporting.config.file=src/test/resources/cucumber-reporting.properties cucumber'
