@@ -1,4 +1,4 @@
-package com.cucumber.banco.bdd.excepciones;
+package error.buscando.movimientos;
 
 public class ElMovimientoNoExiste extends RuntimeException{
 

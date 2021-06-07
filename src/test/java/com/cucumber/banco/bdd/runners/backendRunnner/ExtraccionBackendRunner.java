@@ -1,6 +1,6 @@
 package com.cucumber.banco.bdd.runners.backendRunnner;
 
-import com.cucumber.banco.bdd.excepciones.ElMovimientoNoExiste;
+import com.cucumber.banco.bdd.runners.backendRunnner.helpers.BuscarPrimerMovimiento;
 import com.cucumber.banco.bdd.runners.ExtraccionRunner;
 import com.cucumber.banco.domain.Cuenta;
 import com.cucumber.banco.domain.Movimiento;
@@ -32,20 +32,24 @@ public class ExtraccionBackendRunner implements ExtraccionRunner {
 
         interfazExtraccion.extraer(unaCuentaPropia.getNumeroCuenta(), montoExtraccion);
     }
+    
+    public void tengo_el_movimiento_de_extraccion_por_en_mi_lista_de_movimientos(BigDecimal deLaExtraccion) {
 
+        buscarElPrimerMovimiento()
+                .enLaLista(deLosMovimientosDeLaCuenta())
+                .conElMonto(deLaExtraccion)
+                .yDelTipo(extraccion());
+    }
 
-    public void tengo_el_movimiento_de_extraccion_por_en_mi_lista_de_movimientos(BigDecimal montoMovimiento) {
+    private TipoMovimiento extraccion(){
+        return TipoMovimiento.EXTRACCION;
+    }
+    private List<Movimiento> deLosMovimientosDeLaCuenta() {
+        return unaCuentaPropia.obtenerMovimientos();
+    }
 
-        List<Movimiento> movimientoList = unaCuentaPropia.obtenerMovimientos();
-
-        try {
-            Movimiento movimiento = movimientoList.get(0);
-            assertEquals(montoMovimiento, movimiento.getMonto());
-            assertEquals(TipoMovimiento.EXTRACCION, movimiento.getTipo());
-        }catch(IndexOutOfBoundsException ie){
-
-            throw  new ElMovimientoNoExiste("El movimiento no existe en la lista de movimientos");
-        }
+    private BuscarPrimerMovimiento buscarElPrimerMovimiento(){
+        return new BuscarPrimerMovimiento();
     }
 
 

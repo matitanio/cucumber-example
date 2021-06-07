@@ -11,6 +11,8 @@ import com.cucumber.banco.port.BuscarCuentaPort;
 import com.cucumber.banco.port.db.RepositorioCuentaEnMemoria;
 import com.cucumber.banco.servicios.InterfazTransferencia;
 import com.cucumber.banco.servicios.ServicioTransferencia;
+import error.buscando.movimientos.ElMovimientoNoExiste;
+
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -46,13 +48,10 @@ public class TransferenciasBackendRunner implements TransferenciaRunner {
     public void tengo_el_movimiento_de_transferencia_por_en_la_lista_de_movimientos_de_la_cuenta(BigDecimal montoMovimiento, String cuenta) {
 
         List<Movimiento> movimientoList = buscarCuentaPort.buscarCuentaPorId(cuenta).obtenerMovimientos();
-        //try {
-            Movimiento movimiento = movimientoList.get(0);
-            assertEquals(montoMovimiento, movimiento.getMonto());
-            assertEquals(TipoMovimiento.TRANSFERENCIA, movimiento.getTipo());
-        /*}catch (IndexOutOfBoundsException ie){
-            throw  new ErrorEnBusquedaDeMovimientos("El movimiento no existe en la lista de movimientos");
-        }*/
+
+        Movimiento movimiento = movimientoList.get(0);
+        assertEquals(montoMovimiento, movimiento.getMonto());
+        assertEquals(TipoMovimiento.TRANSFERENCIA, movimiento.getTipo());
 
 
     }
