@@ -1,6 +1,5 @@
 package com.cucumber.banco.bdd.runners.backendRunnner;
 
-import com.cucumber.banco.bdd.excepciones.ErrorEnBusquedaDeMovimientos;
 import com.cucumber.banco.bdd.runners.TransferenciaRunner;
 import com.cucumber.banco.comandos.ComandoTransfencia;
 import com.cucumber.banco.domain.Cuenta;

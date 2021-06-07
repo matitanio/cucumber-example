@@ -1,6 +1,6 @@
 package com.cucumber.banco.bdd.runners.backendRunnner;
 
-import com.cucumber.banco.bdd.excepciones.ErrorEnBusquedaDeMovimientos;
+import com.cucumber.banco.bdd.excepciones.ElMovimientoNoExiste;
 import com.cucumber.banco.bdd.runners.ExtraccionRunner;
 import com.cucumber.banco.domain.Cuenta;
 import com.cucumber.banco.domain.Movimiento;
@@ -12,8 +12,6 @@ import com.cucumber.banco.port.db.RepositorioCuentaEnMemoria;
 import com.cucumber.banco.servicios.InterfazExtraccion;
 import com.cucumber.banco.servicios.ServicioExtraccion;
 import helpers.CuentaHolder;
-import io.cucumber.java.en.Then;
-import io.cucumber.java.en.When;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -46,7 +44,7 @@ public class ExtraccionBackendRunner implements ExtraccionRunner {
             assertEquals(TipoMovimiento.EXTRACCION, movimiento.getTipo());
         }catch(IndexOutOfBoundsException ie){
 
-            throw  new ErrorEnBusquedaDeMovimientos("El movimiento no existe en la lista de movimientos");
+            throw  new ElMovimientoNoExiste("El movimiento no existe en la lista de movimientos");
         }
     }
 
