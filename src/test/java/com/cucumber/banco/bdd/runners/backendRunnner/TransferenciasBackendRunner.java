@@ -1,5 +1,6 @@
 package com.cucumber.banco.bdd.runners.backendRunnner;
 
+import com.cucumber.banco.bdd.excepciones.ErrorEnBusquedaDeMovimientos;
 import com.cucumber.banco.bdd.runners.TransferenciaRunner;
 import com.cucumber.banco.comandos.ComandoTransfencia;
 import com.cucumber.banco.domain.Cuenta;
@@ -46,10 +47,15 @@ public class TransferenciasBackendRunner implements TransferenciaRunner {
     public void tengo_el_movimiento_de_transferencia_por_en_la_lista_de_movimientos_de_la_cuenta(BigDecimal montoMovimiento, String cuenta) {
 
         List<Movimiento> movimientoList = buscarCuentaPort.buscarCuentaPorId(cuenta).obtenerMovimientos();
-        Movimiento movimiento = movimientoList.get(0);
+        //try {
+            Movimiento movimiento = movimientoList.get(0);
+            assertEquals(montoMovimiento, movimiento.getMonto());
+            assertEquals(TipoMovimiento.TRANSFERENCIA, movimiento.getTipo());
+        /*}catch (IndexOutOfBoundsException ie){
+            throw  new ErrorEnBusquedaDeMovimientos("El movimiento no existe en la lista de movimientos");
+        }*/
 
-        assertEquals(montoMovimiento, movimiento.getMonto());
-        assertEquals(TipoMovimiento.TRANSFERENCIA, movimiento.getTipo());
+
     }
 
     private String mensajeErrorPorFaltaDeSaldo;
