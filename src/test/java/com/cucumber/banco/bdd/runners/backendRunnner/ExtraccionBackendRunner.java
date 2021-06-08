@@ -16,7 +16,6 @@ import helpers.CuentaHolder;
 import java.math.BigDecimal;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class ExtraccionBackendRunner implements ExtraccionRunner {
@@ -32,7 +31,7 @@ public class ExtraccionBackendRunner implements ExtraccionRunner {
 
         interfazExtraccion.extraer(unaCuentaPropia.getNumeroCuenta(), montoExtraccion);
     }
-    
+
     public void tengo_el_movimiento_de_extraccion_por_en_mi_lista_de_movimientos(BigDecimal deLaExtraccion) {
 
         buscarElPrimerMovimiento()
