@@ -102,7 +102,7 @@ public class Cuenta {
         }
 
         this.saldo = this.saldo.subtract(montoExtraccion);
-       // this.movimientos.add(new Movimiento(origenExtraccion, montoExtraccion.negate()));
+        this.movimientos.add(new Movimiento(origenExtraccion, montoExtraccion.negate()));
     }
 
     private boolean tieneAcuerdo() {
