@@ -2,7 +2,6 @@ plugins {
 	id 'org.springframework.boot' version '2.2.5.RELEASE'
 	id 'io.spring.dependency-management' version '1.0.9.RELEASE'
 	id 'java'
-	id "se.thinkcode.cucumber-runner" version "0.0.8"
 }
 
 group = 'com.cucumber'
@@ -28,12 +27,22 @@ test {
 	useJUnitPlatform()
 }
 
-cucumber {
-	if(System.properties['org.gradle.project.runner'] == null || System.properties['org.gradle.project.runner'] == ""){
-		System.properties['org.gradle.project.runner']= 'BACK_END'
+
+configurations {
+	cucumberRuntime {
+		extendsFrom testImplementation
 	}
-	glue = 'classpath:com.cucumber.banco'
-	plugin = ['pretty',	"de.monochromata.cucumber.report.PrettyReports:./build/pretty-cucumber"]
-	featurePath = 'src/test/resources/banco'
-	main = 'io.cucumber.core.cli.Main'
+}
+
+
+
+task cucumber() {
+	dependsOn assemble, testClasses
+	doLast {
+		javaexec {
+			main = "io.cucumber.core.cli.Main"
+			classpath = configurations.cucumberRuntime + sourceSets.main.output + sourceSets.test.output
+			args = ['--plugin', 'pretty', '--glue', 'com.cucumber.banco', 'src/test/resources/banco']
+		}
+	}
 }

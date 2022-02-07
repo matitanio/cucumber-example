@@ -8,6 +8,7 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
 import java.math.BigDecimal;
+import java.util.Enumeration;
 
 public class PasosConsultaDescubiertoCuentas {
 
@@ -15,14 +16,11 @@ public class PasosConsultaDescubiertoCuentas {
     private ConsultaDescubiertoRunner runner;
 
     public PasosConsultaDescubiertoCuentas(){
-        String runnerName = System.getProperty("org.gradle.project.runner");
+        String runnerName = "BACK_END";
         runnerType = ConsultaDescubiertoRunnerBuilder.ConsultaDescubiertoRunnerBuilders.valueOf(runnerName);
         runner = ConsultaDescubiertoRunnerBuilder
                 .getInstance().getRunner(runnerType);
-
-
     }
-
 
 
     @When("consulto el limite para girar en  descubierto")
