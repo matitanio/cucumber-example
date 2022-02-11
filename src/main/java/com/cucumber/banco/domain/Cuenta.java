@@ -41,10 +41,14 @@ public class Cuenta {
             BigDecimal montoInteres = calcularMontoInteres(acuerdo);
 
             this.saldo = this.saldo.subtract(montoInteres);
-            this.movimientos.add(new Movimiento(TipoMovimiento.INTERES_COBRADO, montoInteres));
+            agregarMoviento(TipoMovimiento.INTERES_COBRADO,montoInteres);
         }
         this.saldo = this.saldo.add(monto);
-        this.movimientos.add(new Movimiento(tipoMovimiento, monto));
+        agregarMoviento(tipoMovimiento, monto);
+    }
+
+    private void agregarMoviento(TipoMovimiento tipoMovimiento, BigDecimal montoInteres) {
+        this.movimientos.add(new Movimiento(tipoMovimiento, montoInteres));
     }
 
     private BigDecimal calcularMontoInteres(Acuerdo acuerdo) {
@@ -102,7 +106,7 @@ public class Cuenta {
         }
 
         this.saldo = this.saldo.subtract(montoExtraccion);
-        this.movimientos.add(new Movimiento(origenExtraccion, montoExtraccion.negate()));
+        agregarMoviento(origenExtraccion, montoExtraccion.negate());
     }
 
     private boolean tieneAcuerdo() {

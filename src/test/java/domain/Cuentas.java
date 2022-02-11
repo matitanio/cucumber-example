@@ -1,4 +1,4 @@
-package data;
+package domain;
 
 public class Cuentas {
 

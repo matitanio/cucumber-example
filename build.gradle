@@ -34,15 +34,13 @@ configurations {
 	}
 }
 
-
-
 task cucumber() {
 	dependsOn assemble, testClasses
 	doLast {
 		javaexec {
 			main = "io.cucumber.core.cli.Main"
 			classpath = configurations.cucumberRuntime + sourceSets.main.output + sourceSets.test.output
-			args = ['--plugin', 'pretty', '--glue', 'com.cucumber.banco', 'src/test/resources/banco']
+			args = ['--plugin', 'pretty', '--glue', 'classpath:com.cucumber.banco', 'src/test/resources/banco']
 		}
 	}
 }
