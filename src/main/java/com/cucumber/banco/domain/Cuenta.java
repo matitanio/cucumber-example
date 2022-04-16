@@ -102,7 +102,7 @@ public class Cuenta {
         notTieneAcuerdoYElSaldoEsInsuficiente(montoExtraccion);
 
         if(tieneAcuerdo() && noTieneSaldo(montoExtraccion)){
-            throw new SaldoInsuficiente("Saldo Insuficiente");
+            sinSaldo();
         }
 
         this.saldo = this.saldo.subtract(montoExtraccion);
@@ -129,9 +129,14 @@ public class Cuenta {
     private void notTieneAcuerdoYElSaldoEsInsuficiente(BigDecimal montoExtraccion) {
 
         if(noTieneAcuerdo() && this.saldo.subtract(montoExtraccion).signum() < 0){
-            throw new SaldoInsuficiente();
+            sinSaldo();
         }
     }
+
+    public void sinSaldo(){
+        throw new SaldoInsuficiente("Saldo Insuficiente");
+    }
+
 
 
     private boolean noTieneAcuerdo() {
