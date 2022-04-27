@@ -1,7 +1,10 @@
-Feature: Alta de cbu
+Feature: Alta un CBU por número
 
-  Scenario: Agregegar un cbu valido
-    Given la cuenta "0000000001" tiene un saldo de 2000.00
-    And la lista de destinatarios esta vacia
-    When agrego el cbu "072076268800003566815" a la lista de destinatarios
-    Then el cbu "072076268800003566815" queda guardado en la lista de destinatarios
+Scenario: El cliente agrega un CBU válido
+  Given El cliente con número de cuenta "000001"
+  When cuando agrega el CBU 0720217188000036504936
+  And el apodo "Micaela Stuckert"
+  And el CBU pertence a la cuenta del Banco Galicia de Micaela Stuckert
+  Then El usuario agrega el CBU a su lista de CBU
+
+
