@@ -28,18 +28,18 @@ Scenario: El cliente agrega un CBU válido
     When agrega el CBU 0720217188000036504936
     And el apodo "Micaela Stuckert"
     And el CBU pertence a la cuenta del Banco Banco de Nabu de Luke Skaywalker
-    Then El CBU no se agrega a la lista de cbu
+    Then el CBU no se agrega a la lista de cbu
 
   #El cliente con nro de cuenta 00001 agrega  el CBU  0720217188000036504936
   # y no no agrega un apododo entonces no se agrega el cbu a la lista y obtengo el mensaje "es necesario agregar un apodo"
   Scenario: El cliente agrega un CBU válido
     Given El cliente con número de cuenta "000001"
     When agrega el CBU 0720217188000036504936
-    Then Obtengo el mensaje "es necesario agregar un apodo"
+    Then obtengo el mensaje "es necesario agregar un apodo"
 
   #El cliente con numero de cuenta 00001 agrega el cbu 0720217188000036504936 con el apodo Micaela Stuckert
   # pero nos devuelve un mensaje de error de CBU inexistente
   Scenario: El cliente intenta agregar un CBU que no existe
     Given El cliente con número de cuenta "000001"
     When agrega el CBU 1111111111111111111111
-    Then Obtengo el mensaje "CBU inexistente"
+    Then obtengo el mensaje "CBU inexistente"
