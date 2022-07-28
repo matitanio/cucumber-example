@@ -26,15 +26,15 @@ public class Cuenta {
 
     public void depositar(BigDecimal monto){
 
-       ingresarDinerdo(monto, TipoMovimiento.DEPOSITO);
+       ingresarDinero(monto, TipoMovimiento.DEPOSITO);
     }
 
     public void recibirTransferencia(BigDecimal monto){
 
-        ingresarDinerdo(monto, TipoMovimiento.TRANSFERENCIA);
+        ingresarDinero(monto, TipoMovimiento.TRANSFERENCIA);
     }
 
-    private void ingresarDinerdo(BigDecimal monto, TipoMovimiento tipoMovimiento){
+    private void ingresarDinero(BigDecimal monto, TipoMovimiento tipoMovimiento){
 
         if(tengoSaldoNegativoYAcuerdoConIntres()){
             Acuerdo acuerdo = buscarAcuerdoQueAplica();
@@ -101,12 +101,17 @@ public class Cuenta {
 
         notTieneAcuerdoYElSaldoEsInsuficiente(montoExtraccion);
 
-        if(tieneAcuerdo() && noTieneSaldo(montoExtraccion)){
+        if(necesitaUsarAcuerdo(montoExtraccion) && tieneAcuerdo() && noTieneSaldo(montoExtraccion)){
             sinSaldo();
         }
 
         this.saldo = this.saldo.subtract(montoExtraccion);
         agregarMoviento(origenExtraccion, montoExtraccion.negate());
+    }
+
+    private boolean necesitaUsarAcuerdo(BigDecimal montoExtraccion) {
+
+       return this.saldo.compareTo(montoExtraccion) < 0;
     }
 
     private boolean tieneAcuerdo() {

@@ -12,6 +12,13 @@ Feature: Extraer Dinero de una caja de ahorro
     When Intengo extraer 500.00
     And El saldo de mi cuenta es de 300.00
 
+  Scenario: Extraer de una cuenta con Saldo y que no usa el acuerdo
+    Given la cuenta "0000000001" tiene un saldo de 3500.00
+    And un acuerdo en descubierto por 2000.00 con interes de 2.5 %
+    When Extraigo 500.00 en la cuenta
+    Then El saldo de mi cuenta es de 3000.00
+    And Tengo el movimiento de extraccion por -500.00 en mi lista de movimientos
+
   Scenario: Extraer de una cuenta con Saldo y que usa el acuerdo
     Given la cuenta "0000000001" tiene un saldo de 300.00
     And un acuerdo en descubierto por 2000.00 con interes de 2.5 %
